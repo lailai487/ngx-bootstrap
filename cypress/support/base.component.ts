@@ -55,8 +55,8 @@ export abstract class BaseComponent {
     cy.get(`${ baseSelector } input`).eq(inputIndex ? inputIndex : 0).dblclick();
   }
 
-  isInputHaveAttrs(baseSelector: string, attributes: AttrObj[]) {
-    cy.get(`${baseSelector} input`)
+  isInputHaveAttrs(baseSelector: string, attributes: AttrObj[], inputIndex = 0) {
+    cy.get(`${baseSelector} input`).eq(inputIndex)
       .then(input => {
         let i = 0;
         for (; i < attributes.length; i++) {
@@ -65,8 +65,12 @@ export abstract class BaseComponent {
       });
   }
 
-  clearInputAndSendKeys(baseSelector: string, dataToSend: string) {
-    cy.get(`${baseSelector} input`).clear().type(dataToSend);
+  clearInputAndSendKeys(baseSelector: string, dataToSend: string, inputIndex = 0) {
+    cy.get(`${baseSelector} input`).eq(inputIndex).clear().type(dataToSend);
+  }
+
+  clickEnterOnInput(baseSelector: string, inputIndex = 0) {
+    cy.get(`${baseSelector} input`).eq(inputIndex).type('{enter}');
   }
 
   isDemoContainsTxt(baseSelector: string, expectedTxt: string, expectedTxtOther?: string) {
